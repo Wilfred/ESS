@@ -300,8 +300,11 @@ to look up any doc strings."
 (defun ess-julia-mode  (&optional proc-name)
   "Major mode for editing julia source.  See `ess-mode' for more help."
   (interactive "P")
-  ;; (setq ess-customize-alist ess-julia-customize-alist)
-  (ess-mode ess-julia-customize-alist proc-name)
+
+  (julia-mode)
+
+  (set (make-local-variable 'ess-customize-alist) ess-julia-customize-alist)
+
   ;; for emacs >= 24
   (remove-hook 'completion-at-point-functions 'ess-filename-completion 'local) ;; should be first
   (add-hook 'completion-at-point-functions 'ess-julia-object-completion nil 'local)
@@ -313,7 +316,8 @@ to look up any doc strings."
   (setq imenu-generic-expression ess-julia-imenu-generic-expression)
   (imenu-add-to-menubar "Imenu-jl")
   (run-hooks 'ess-julia-mode-hook)
-  (julia-mode))
+  (ess-minor-mode t)
+)
 
 (defvar ess-julia-mode-hook nil)
 (defvar ess-julia-post-run-hook nil

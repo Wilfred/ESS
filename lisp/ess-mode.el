@@ -344,6 +344,27 @@
 (if (featurep 'xemacs)
     (add-hook 'ess-mode-hook 'ess-mode-xemacs-menu))
 
+(defvar ess-minor-mode-alist nil)
+
+(define-minor-mode ess-minor-mode
+  "Minor mode equivalent of `ess-mode'.
+
+A prefix argument enables the mode if the argument is positive,
+and disables it otherwise.
+
+When called from Lisp, the mode command toggles the mode if the
+argument is `toggle', disables the mode if the argument is a
+non-positive integer, and enables the mode otherwise (including
+if the argument is omitted or nil or a positive integer)."
+  :keymap ess-mode-map
+  :lighter " ESS-minor"
+  (message "Enabled or disabled ESS minor.")
+  (ess-setq-vars-local ess-customize-alist)
+  (ess-setq-vars-local ess-mode-editing-alist)
+  (ess-set-style ess-style t)
+  (ess-load-extras)
+  )
+
 (defun ess-mode (&optional alist proc-name)
   "Major mode for editing ESS source.
 Optional arg ALIST describes how to customize the editing mode.
